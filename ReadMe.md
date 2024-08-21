@@ -166,9 +166,9 @@ for state in unmp_states.columns:
     if state in ["District Of Columbia","Puerto Rico"]:
         continue
     ax2 = axs[i].twinx()
-    unmp_states.query('index >= 2020 and index < 2022')[state] \
+    unmp_states.query('index >= 2020 and index < 2024')[state] \
         .plot(ax=axs[i], label='Unemployment')
-    part_states.query('index >= 2020 and index < 2022')[state] \
+    part_states.query('index >= 2020 and index < 2024')[state] \
         .plot(ax=ax2, label='Participation', color=color_pal[1])
     ax2.grid(False)
     axs[i].set_title(state)
@@ -176,4 +176,28 @@ for state in unmp_states.columns:
 plt.tight_layout()
 plt.show()
 ```
+
+![Unemployment rate VS Participation rate by each US state from 2020 to 2024](/Participation%20vs%20Unemployment%20by%20state.png)
+*;
+
+Looking into single state of California since in gave strange results in previous chart 
+
+```python
+state = 'California' # Just change it to your state of interest to look into its unemploment vs participation
+fig, ax = plt.subplots(figsize=(10, 5), sharex=True)
+ax2 = ax.twinx()
+uemp_states2 = unmp_states.asfreq('MS')
+l1 = uemp_states2.query('index >= 2020 and index < 2024')[state] \
+    .plot(ax=ax, label='Unemployment')
+l2 = part_states.dropna().query('index >= 2020 and index < 2024')[state] \
+    .plot(ax=ax2, label='Participation', color=color_pal[1])
+ax2.grid(False)
+ax.set_title(state)
+fig.legend(labels=['Unemployment','Participation'])
+plt.show()
+```
+
+![Unemployment rate VS Participation rate in state of California from 2020 to 2024](/California.png)
+*Graph seems to be fine here when looking only at California, maybe a small blue point at the bottom left indicates that data needs cleaning, but it is for the next time. Data cleaning is going to be another project;
+
 
