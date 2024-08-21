@@ -119,3 +119,61 @@ ax.set_xlabel('% Unemployed')
 plt.show()
 ```
 
+![Unemployment Bar Chart](/Unemployment_bar.png)
+*Unemployment rate by US state bar chart for May 2020;
+
+
+### Workforce Participation Rate 
+
+Extracting the montly seasonally adjusted participation rate in % for different US states 
+
+```python
+part_df = fred.search('participation rate state', filter=('frequency','Monthly'))
+part_df = part_df.query('seasonal_adjustment == "Seasonally Adjusted" and units == "Percent"')
+```
+
+Joining the data
+
+```python
+part_id_to_state = part_df['title'].str.replace('Labor Force Participation Rate for ','').to_dict()
+
+all_results = []
+
+for myid in part_df.index:
+    results = fred.get_series(myid)
+    results = results.to_frame(name=myid)
+    all_results.append(results)
+part_states = pd.concat(all_results, axis=1)
+part_states.columns = [part_id_to_state[c] for c in part_states.columns]
+```
+
+Fixing name of Columbia 
+
+```python
+unmp_states = unmp_states.rename(columns={'the District of Columbia':'District Of Columbia'})
+```
+
+### Unemployment rate against Participation rate in US states
+
+Plotting comparison of unemployment and workforce participation rate by US state
+
+```python
+fig, axs = plt.subplots(10, 5, figsize=(30, 30), sharex=True)
+axs = axs.flatten()
+
+i = 0
+for state in unmp_states.columns:
+    if state in ["District Of Columbia","Puerto Rico"]:
+        continue
+    ax2 = axs[i].twinx()
+    unmp_states.query('index >= 2020 and index < 2022')[state] \
+        .plot(ax=axs[i], label='Unemployment')
+    part_states.query('index >= 2020 and index < 2022')[state] \
+        .plot(ax=ax2, label='Participation', color=color_pal[1])
+    ax2.grid(False)
+    axs[i].set_title(state)
+    i += 1
+plt.tight_layout()
+plt.show()
+```
+
