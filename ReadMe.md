@@ -198,6 +198,13 @@ plt.show()
 ```
 
 ![Unemployment rate VS Participation rate in state of California from 2020 to 2024](/California.png)
-*Graph seems to be fine here when looking only at California, maybe a small blue point at the bottom left indicates that data needs cleaning, but it is for the next time. Data cleaning is going to be another project;
+*Graph seems to be fine here when we looking only at California, maybe a small blue point at the bottom left indicates that data needs cleaning, but it is for the next time. Data cleaning is going to be another project;
 
 
+# What I Learned
+
+Throughout this project, I've practiced my Python Data Analyst toolkit with various challenges:
+
+- **🧩 Data manipulation with Pandas and Numpy:** Mastered the art of data manipulation with pandas library. Merging, filtering and manipulating data like a true ?Pandaren? haha
+- **📊 Data Visualization:** Created simple and complex data visualisations using MatplotLib and PlotlyExpress libraries
+- **💡 Analytical Approach:** Leveled up my real-world puzzle-solving skills, turning my interest in data into actionable scripts and insightful graphs.
